@@ -1,0 +1,25 @@
+{
+  "name": "first-node-api",
+  "version": "1.0.0",
+  "description": "Este projeto consiste em uma API RESTful de alta performance, desenvolvida do zero como parte de um curso focado nas melhores práticas e tecnologias modernas do ecossistema Node.js.",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "dev": "node --watch server.ts"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com-l:lincoln-irano/first-node-api.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "fastify": "^5.6.1",
+    "pino-pretty": "^13.1.2"
+  },
+  "devDependencies": {
+    "@types/node": "^24.9.2",
+    "typescript": "^5.9.3"
+  }
+}
