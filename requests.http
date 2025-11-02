@@ -1,0 +1,13 @@
+### Create a course
+POST http://localhost:3333/courses
+Content-Type: application/json
+
+{
+  "title": "Curso de Fastify"
+}
+
+### Get all coruses
+GET http://localhost:3333/courses
+
+### Get by id
+GET http://localhost:3333/courses/19d6cb91-3b16-47bf-8acc-90d2a6c398c4
