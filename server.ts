@@ -1,5 +1,13 @@
 import fastify from "fastify";
-import crypto from "node:crypto";
+import {
+  validatorCompiler,
+  serializerCompiler,
+  type ZodTypeProvider,
+  jsonSchemaTransform,
+} from "fastify-type-provider-zod";
+import { fastifySwagger } from "@fastify/swagger";
+import scalarApiReference from "@scalar/fastify-api-reference";
+import { Route } from "./src/routes/index.ts";
 
 const server = fastify({
   logger: {
@@ -11,53 +19,35 @@ const server = fastify({
       },
     },
   },
-});
+}).withTypeProvider<ZodTypeProvider>();
 
-const courses = [
-  { id: crypto.randomUUID(), title: "Curso de Node.JS" },
-  { id: crypto.randomUUID(), title: "Curso de React" },
-  { id: crypto.randomUUID(), title: "Curso de React Native" },
-];
+if (process.env.NODE_ENV === "development") {
+  server.register(fastifySwagger, {
+    openapi: {
+      info: {
+        title: "Desafio Node.js",
+        version: "1.0.0",
+      },
+    },
+    transform: jsonSchemaTransform,
+  });
 
-server.get("/courses", (_, reply) => {
-  return reply.status(200).send({ courses });
-});
+  server.register(scalarApiReference, {
+    routePrefix: "/docs",
+    configuration: {
+      theme: "kepler",
+    },
+  });
+}
 
-server.get("/courses/:id", (request, reply) => {
-  type Params = {
-    id: string;
-  };
+server.setSerializerCompiler(serializerCompiler);
+server.setValidatorCompiler(validatorCompiler);
 
-  const params = request.params as Params;
-  const courseId = params.id;
-
-  const course = courses.find((course) => course.id === courseId);
-
-  if (course) {
-    return reply.status(200).send({ course });
-  }
-
-  return reply.status(404).send();
-});
-
-server.post("/courses", (request, reply) => {
-  type Body = {
-    title: string;
-  };
-
-  const courseId = crypto.randomUUID();
-  const body = request.body as Body;
-  const courseTitle = body.title;
-
-  if (!courseTitle) {
-    return reply.status(400).send({ message: "Título obrigatório." });
-  }
-
-  courses.push({ id: courseId, title: courseTitle });
-
-  // Always return an object
-  return reply.status(201).send({ courseId });
-});
+server.register(Route.createCourses);
+server.register(Route.deleteCourse);
+server.register(Route.getCourses);
+server.register(Route.getCoursesById);
+server.register(Route.updateCourse);
 
 server.listen({ port: 3333 }).then(() => {
   console.log("HTTP server running!");
