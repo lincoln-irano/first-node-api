@@ -15,7 +15,7 @@
     "url": "git@github.com-l:lincoln-irano/first-node-api.git"
   },
   "keywords": [],
-  "author": "",
+  "author": "lincoln-irano",
   "license": "ISC",
   "dependencies": {
     "@fastify/swagger": "^9.5.2",
