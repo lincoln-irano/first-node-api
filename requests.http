@@ -1,4 +1,4 @@
-### Create a course
+### Create a Course
 POST http://localhost:3333/courses
 Content-Type: application/json
 
@@ -6,8 +6,19 @@ Content-Type: application/json
   "title": "Curso de Fastify"
 }
 
-### Get all coruses
+### Get all Courses
 GET http://localhost:3333/courses
 
 ### Get by id
-GET http://localhost:3333/courses/19d6cb91-3b16-47bf-8acc-90d2a6c398c4
+GET http://localhost:3333/courses/2c21ff26-302c-4901-924e-157a75c7991e
+
+### Update a Course
+PUT http://localhost:3333/courses/2c21ff26-302c-4901-924e-157a75c7991e
+Content-Type: application/json
+
+{
+  "description": "Um curso muito bom sobre fastify"
+}
+
+### Delete a Course
+DELETE http://localhost:3333/courses/2c21ff26-302c-4901-924e-157a75c7991e
