@@ -13,7 +13,7 @@ export const createCourses: FastifyPluginAsyncZod = async (server) => {
         description:
           "This route creates a course receiving a title and, optionally, a description",
         body: z.object({
-          title: z.string().min(5, "Título precisa ter no mínimo 5 caracteres"),
+          title: z.string().min(3, "Título precisa ter no mínimo 3 caracteres"),
           description: z.string().optional(),
         }),
         response: {
