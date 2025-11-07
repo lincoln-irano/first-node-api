@@ -7,7 +7,7 @@ import {
 } from "fastify-type-provider-zod";
 import { fastifySwagger } from "@fastify/swagger";
 import scalarApiReference from "@scalar/fastify-api-reference";
-import { Route } from "./src/routes/index.ts";
+import { Route } from "./routes/index.ts";
 
 const server = fastify({
   logger: {
@@ -40,8 +40,8 @@ if (process.env.NODE_ENV === "development") {
   });
 }
 
-server.setSerializerCompiler(serializerCompiler);
 server.setValidatorCompiler(validatorCompiler);
+server.setSerializerCompiler(serializerCompiler);
 
 server.register(Route.createCourses);
 server.register(Route.deleteCourse);
@@ -49,6 +49,4 @@ server.register(Route.getCourses);
 server.register(Route.getCoursesById);
 server.register(Route.updateCourse);
 
-server.listen({ port: 3333 }).then(() => {
-  console.log("HTTP server running!");
-});
+export { server }
